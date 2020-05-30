@@ -51,6 +51,7 @@ class HelpDesk {
     document.onkeydown = onkeydown;
     defaultData(false);
     console.log('reloaded');
+    console.log('no default data')
   }
 
   eventsTicket() {
