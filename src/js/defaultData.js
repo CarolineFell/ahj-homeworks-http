@@ -13,5 +13,16 @@ export default function defaultData() {
       console.log(xhr.responseText);
     }
   });
-  xhr.send(params);
+  function xhrSend() {
+    xhr.send(params);
+    console.log('send default data');
+  }
+
+  function xhrAbort() {
+    xhr.abort(params);
+    console.log('abort default data');
+  }
+
+  setTimeout(xhrSend(), 1000);
+  clearTimeout(xhrAbort(), 2000);
 }
