@@ -1,4 +1,8 @@
 /* eslint-disable no-console */
+/* eslint-disable consistent-return */
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-restricted-globals */
+
 import defaultData from './defaultData';
 import Display from './Display';
 import Popovers from './Popovers';
@@ -9,6 +13,7 @@ const display = new Display();
 const popovers = new Popovers(document.body);
 const deleteTicket = new DeleteTicket();
 const xhr = new XHR();
+const body = document.querySelector('body');
 
 class HelpDesk {
   constructor() {
@@ -18,7 +23,7 @@ class HelpDesk {
   }
 
   async init() {
-    defaultData();
+    defaultData(true);
     const arrayTickets = await xhr.getTickets();
     display.displayTickets(arrayTickets);
 
@@ -30,6 +35,22 @@ class HelpDesk {
     this.titlePopup = document.querySelector('#title-popup');
     deleteTicket.init();
     this.eventsTicket();
+    body.onload = this.onLoad();
+  }
+
+  onkeydown() {
+    if (event.keyCode > 111 && event.keyCode < 124) {
+      event.keyCode = 0;
+      window.event.returnValue = false;
+      window.event.cancelBubble = true;
+      return false;
+    }
+  }
+
+  onLoad() {
+    document.onkeydown = onkeydown;
+    defaultData(false);
+    console.log('reloaded');
   }
 
   eventsTicket() {
